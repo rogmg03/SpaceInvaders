@@ -10,22 +10,26 @@ public class Player {
     private double velX;
     private double velY;
 
-    private BufferedImage type;
+    private Textures tex;
 
+    /*
+    private BufferedImage type;
     private BufferedImage player;
     private BufferedImage player1;
     private BufferedImage player2;
+    */
 
-    public Player(double x, double y, Game game){
+    public Player(double x, double y, Textures tex){
         this.x = x;
         this.y = y;
+        this.tex = tex;
 
-        SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
+        //SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
 
-        player = ss.grabImage(1,1,128,128);
-        player2 = ss.grabImage(2,1,128,128);
-        player1 = ss.grabImage(3,1,128,128);
-        type = player;
+        //player = ss.grabImage(1,1,128,128);
+        //player2 = ss.grabImage(2,1,128,128);
+        //player1 = ss.grabImage(3,1,128,128);
+        //type = player;
     }
 
     //Implementar factory
@@ -40,7 +44,7 @@ public class Player {
     }
 
     public void render(Graphics g){
-        g.drawImage(type,(int)x,(int)y,null);
+        g.drawImage(tex.type,(int)x,(int)y,null);
     }
 
     //###########Getter y Setters#############
@@ -66,7 +70,7 @@ public class Player {
         this.velY = velY;
     }
 
-    public void changeType(String side){
+    /*public void changeType(String side){
         if (side == "LEFT"){
             type = player1;
         } else if (side == "RIGHT") {
@@ -74,7 +78,7 @@ public class Player {
         } else if (side == "NORMAL"){
             type = player;
         }
-    }
+    }*/
 
 
 

@@ -1,5 +1,7 @@
 package Game;
 
+import Tools.Timer;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
@@ -21,9 +23,15 @@ public class Game extends Canvas implements Runnable {
 
     private BufferedImage image = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
     private BufferedImage spriteSheet = null;
+    private BufferedImage background = null;
+
+    private Timer delay = new Timer();
+
+    private boolean shooting = false;
 
     private Player p;
     private Controller c;
+    private Textures tex;
 
     public void init(){
         requestFocus(); //Evita tener que darle click a la ventana
@@ -31,14 +39,17 @@ public class Game extends Canvas implements Runnable {
         BufferedImageLoader loader = new BufferedImageLoader();
         try{
             spriteSheet = loader.loadImage("/SpriteSheet.png"); //La imagen Spritesheet, texturas del juego
+            background = loader.loadImage("/background.png");
         }catch(IOException e){
             e.printStackTrace();
         }
 
         addKeyListener(new KeyInput(this));
 
-        p = new Player(300,450,this);
-        c = new Controller(this);
+        tex = new Textures(this);
+
+        p = new Player(300,450,tex);
+        c = new Controller(this, tex);
     }
 
     //synchronized se utiliza para el manejo de hilos
@@ -117,6 +128,8 @@ public class Game extends Canvas implements Runnable {
 
         g.drawImage(image, 0, 0, getWidth(),getHeight(),this);
 
+        g.drawImage(background, 0, 0, null);
+
         p.render(g);
         c.render(g);
 
@@ -133,12 +146,13 @@ public class Game extends Canvas implements Runnable {
 
         if (key == KeyEvent.VK_RIGHT){
             p.setVelX(5);
-            p.changeType("RIGHT");
+            Textures.changeType("RIGHT");
         }else if (key == KeyEvent.VK_LEFT){
             p.setVelX(-5);
-            p.changeType("LEFT");
-        }else if (key == KeyEvent.VK_SPACE){
-            c.addBullet(new Bullet(p.getX(),p.getY(),this));
+            Textures.changeType("LEFT");
+        }else if (key == KeyEvent.VK_SPACE && !shooting && delay.delay(500)){
+            shooting = true;
+            c.addBullet(new Bullet(p.getX(),p.getY(),tex));
         }
     }
 
@@ -148,10 +162,12 @@ public class Game extends Canvas implements Runnable {
 
         if (key == KeyEvent.VK_RIGHT) {
             p.setVelX(0);
-            p.changeType("NORMAL");
+            Textures.changeType("NORMAL");
         } else if (key == KeyEvent.VK_LEFT) {
             p.setVelX(0);
-            p.changeType("NORMAL");
+            Textures.changeType("NORMAL");
+        } else if (key == KeyEvent.VK_SPACE){
+            shooting = false;
         }
     }
 
