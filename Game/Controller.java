@@ -1,69 +1,56 @@
 package Game;
 
+import Enemies.Basic;
+import Enemies.EnemyA;
 import Tools.ListaEnlazada;
 import java.util.Random;
 import java.awt.*;
 
 public class Controller {
 
-    private ListaEnlazada <Bullet> b = new ListaEnlazada<Bullet>();
-    private ListaEnlazada <Enemy> e = new ListaEnlazada<Enemy>();
+    private ListaEnlazada <Entity> e = new ListaEnlazada<Entity>();
 
     Random r = new Random();
 
-    Bullet TempBullet;
-    Enemy TempEnemy;
 
     Game game;
     Textures tex;
-
-    public Controller(Game game, Textures tex){
-        this.game = game;
-        this.tex = tex;
-
-        addEnemy(new Enemy(r.nextInt(Game.WIDTH * Game.SCALE),0,tex));
+    private Entity type;
+    public Controller(Textures tex, String type) {
+        if (type.equals("Basic")){
+            Basic wave = new Basic(tex);
+            this.type = wave;
+        } else if(type.equals("EnemyA")){
+            EnemyA wave = new EnemyA(tex);
+            this.type = wave;
+            wave.setBoss();
+        }
     }
+
+    Entity ent;
 
     public void tick(){
-        for (int i = 0; i < b.getSize(); i++){
-            TempBullet = b.get(i);
-
-            if (TempBullet.getY() < 0){
-                removeBullet(TempBullet);
-            }
-
-            TempBullet.tick();
-        }
         for (int i = 0; i < e.getSize(); i++){
-            TempEnemy = e.get(i);
-
-            TempEnemy.tick();
+            ent = e.get(i);
+            ent.tick();
         }
+        type.tick();
     }
 
-    public void render(Graphics g){
-        for (int i = 0; i < b.getSize(); i++){
-            TempBullet = b.get(i);
-            TempBullet.render(g);
+    public void render(Graphics g) {
+        for (int i = 0; i < e.getSize(); i++) {
+            ent = e.get(i);
+
+            ent.render(g);
         }
-        for (int i = 0; i < e.getSize(); i++){
-            TempEnemy = e.get(i);
-            TempEnemy.render(g);
+        type.render(g);
+    }
+
+    public void addEntity (Entity block){
+            e.add(block);
         }
-    }
-
-    public void addBullet(Bullet block){
-        b.add(block);
-    }
-    private void removeBullet(Bullet block){
-        b.removeValue(block,false);
-    }
-
-    public void addEnemy(Enemy block){
-        e.add(block);
-    }
-    private void removeEnemy(Enemy block){
-        e.removeValue(block,false);
-    }
+    private void removeEntity(Enemy block){
+            e.removeValue(block,false);
+        }
 
 }

@@ -3,14 +3,13 @@ package Game;
 import java.awt.*;
 import java.util.Random;
 
-public class Enemy implements Entity{
+public class Enemy extends GameObject implements Entity{
 
-    private double x, y;
+
     private Textures tex;
 
     public Enemy(double x, double y, Textures tex){
-         this.x = x;
-         this.y = y;
+    super(x,y);
          this.tex = tex;
          //Random rand = new Random();
          //tex.style= rand.nextInt(2)+5;

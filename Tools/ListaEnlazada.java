@@ -77,9 +77,22 @@ public class ListaEnlazada <T>{
             temp = temp.next;
             cont += 1;
         }
-        System.out.println(temp.getT());
+        //System.out.println(temp.getT());
         return (T) temp.getT();
     }
+
+    public void change(int i, T valor){
+        int cont = 0;
+        Nodo temp = this.head;
+
+        while (cont!=i){
+            temp = temp.next;
+            cont += 1;
+        }
+        temp.value = valor;
+    }
+
+
 
     public int getSize() {
         return Size;

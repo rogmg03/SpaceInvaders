@@ -49,7 +49,7 @@ public class Game extends Canvas implements Runnable {
         tex = new Textures(this);
 
         p = new Player(300,450,tex);
-        c = new Controller(this, tex);
+        c = new Controller(tex,"EnemyA");
     }
 
     //synchronized se utiliza para el manejo de hilos
@@ -152,7 +152,7 @@ public class Game extends Canvas implements Runnable {
             Textures.changeType("LEFT");
         }else if (key == KeyEvent.VK_SPACE && !shooting && delay.delay(500)){
             shooting = true;
-            c.addBullet(new Bullet(p.getX(),p.getY(),tex));
+            c.addEntity(new Bullet(p.getX(),p.getY(),tex));
         }
     }
 

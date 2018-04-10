@@ -11,6 +11,7 @@ public class Textures {
     public BufferedImage image;
     public static BufferedImage type;
     public BufferedImage enemy;
+    public BufferedImage boss;
     public int style;
 
     private SpriteSheet ss;
@@ -26,6 +27,7 @@ public class Textures {
         player1 = ss.grabImage(3,1,128,128);
         image = ss.grabImage(4,1,128,128);
         enemy = ss.grabImage(5,1,128,128);
+        boss = ss.grabImage(1,2,128,128);
         type = player;
     }
     static void changeType(String side){

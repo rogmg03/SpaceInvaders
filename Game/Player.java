@@ -3,36 +3,20 @@ package Game;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Player {
+public class Player extends GameObject{
 
-    private double x;
-    private double y;
     private double velX;
     private double velY;
 
     private Textures tex;
 
-    /*
-    private BufferedImage type;
-    private BufferedImage player;
-    private BufferedImage player1;
-    private BufferedImage player2;
-    */
 
     public Player(double x, double y, Textures tex){
-        this.x = x;
-        this.y = y;
+        super(x,y);
         this.tex = tex;
 
-        //SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
-
-        //player = ss.grabImage(1,1,128,128);
-        //player2 = ss.grabImage(2,1,128,128);
-        //player1 = ss.grabImage(3,1,128,128);
-        //type = player;
     }
 
-    //Implementar factory
     public void tick(){
         x += velX;
         y += velY;
