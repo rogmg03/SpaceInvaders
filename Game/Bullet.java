@@ -1,38 +1,45 @@
 package Game;
 
+import Tools.EntityA;
 import Tools.Nodo;
+import Tools.Physics;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
-public class Bullet extends Nodo<Bullet> implements  Entity{
+public class Bullet extends GameObject/*Nodo<Bullet>*/ implements EntityA {
 
-    private double x;
-    private double y;
+    private int life;
     private Textures tex;
-    //private BufferedImage image;
+    private Game game;
 
-
-    public Bullet(double x, double y, Textures tex){
-        this.x = x;
-        this.y = y;
+    public Bullet(double x, double y, Textures tex, Game game){
+        super(x,y);
         this.tex = tex;
-
-        //SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
-        //image = ss.grabImage(4,1,128,128);
+        this.game = game;
+        this.life = 1;
     }
 
 
     public void tick(){
         y-=10;
+
+        if (Physics.Collision(this, game.eb)){
+            System.out.println("Shoot");
         }
+    }
 
     public void render(Graphics g){
             g.drawImage(tex.image,(int)x,(int)y,null);
         }
 
-    //###########Getter y Setters#############
+    public Rectangle getBounds() {
+        return super.getBounds(128,128);
+    }
 
+    //###########Getter y Setters#############
+    public int getLife(){
+        return this.life;
+    }
     public double getX(){
             return x;
         }

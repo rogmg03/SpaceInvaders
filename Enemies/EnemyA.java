@@ -1,15 +1,15 @@
 package Enemies;
 
 import Game.Boss;
-import Game.Enemy;
-import Game.Entity;
+import Tools.EntityA;
 import Game.Textures;
+import Tools.EntityB;
 import Tools.ListaEnlazada;
 
 import java.awt.*;
 import java.util.Random;
 
-public class EnemyA implements Entity{
+public class EnemyA implements Wave {
     Textures tex;
     Basic A;
     Random rand = new Random();
@@ -21,8 +21,12 @@ public class EnemyA implements Entity{
 
 
     public void setBoss(){
-        Boss b = new Boss((A.e.get(r).getX()),(A.e.get(r).getY()), tex);
+        Boss b = new Boss((A.e.get(r).getX()),(A.e.get(r).getY()), tex, 3);
         A.e.change(r,b);
+    }
+
+    public ListaEnlazada<EntityB> getLista(){
+        return A.e;
     }
 
     @Override
@@ -36,12 +40,7 @@ public class EnemyA implements Entity{
     }
 
     @Override
-    public double getX() {
-        return 0;
+    public void addEntity(EntityB block) {
     }
 
-    @Override
-    public double getY() {
-        return 0;
-    }
 }

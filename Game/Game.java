@@ -1,5 +1,8 @@
 package Game;
 
+import Tools.EntityA;
+import Tools.EntityB;
+import Tools.ListaEnlazada;
 import Tools.Timer;
 
 import java.awt.*;
@@ -29,9 +32,14 @@ public class Game extends Canvas implements Runnable {
 
     private boolean shooting = false;
 
+    //contador de enemigos vivos y muertos
+
     private Player p;
     private Controller c;
     private Textures tex;
+
+    public ListaEnlazada<EntityA> ea;
+    public ListaEnlazada<EntityB> eb;
 
     public void init(){
         requestFocus(); //Evita tener que darle click a la ventana
@@ -49,7 +57,13 @@ public class Game extends Canvas implements Runnable {
         tex = new Textures(this);
 
         p = new Player(300,450,tex);
-        c = new Controller(tex,"EnemyA");
+        c = new Controller(tex);
+
+        c.createEnemy("Basic");
+
+        ea = c.getEntityA();
+        eb = c.getEntityB();
+
     }
 
     //synchronized se utiliza para el manejo de hilos
@@ -110,6 +124,8 @@ public class Game extends Canvas implements Runnable {
     private void tick(){ //lo que el juego actualice
         p.tick();
         c.tick();
+
+
     }
 
     private void render(){ //lo que el juego renderice
@@ -152,7 +168,7 @@ public class Game extends Canvas implements Runnable {
             Textures.changeType("LEFT");
         }else if (key == KeyEvent.VK_SPACE && !shooting && delay.delay(500)){
             shooting = true;
-            c.addEntity(new Bullet(p.getX(),p.getY(),tex));
+            c.addEntity(new Bullet(p.getX(),p.getY(),tex,this));
         }
     }
 

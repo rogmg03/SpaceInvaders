@@ -1,18 +1,19 @@
 package Game;
 
+import Tools.EntityB;
 import java.awt.*;
-import java.util.Random;
+import java.awt.Rectangle;
 
-public class Enemy extends GameObject implements Entity{
+public class Enemy extends GameObject implements EntityB {
 
 
     private Textures tex;
+    private int life;
 
-    public Enemy(double x, double y, Textures tex){
-    super(x,y);
-         this.tex = tex;
-         //Random rand = new Random();
-         //tex.style= rand.nextInt(2)+5;
+    public Enemy(double x, double y, Textures tex, int life){
+        super(x,y);
+        this.tex = tex;
+        this.life = life;
     }
 
     public void tick(){
@@ -25,6 +26,18 @@ public class Enemy extends GameObject implements Entity{
     }
 
     @Override
+    public Rectangle getBounds() {
+        return new Rectangle((int)this.getX(),(int)this.getY(),128,128);
+    }
+
+    /*@Override
+    public Rectangle getBounds(int width, int height) {
+        return new Rectangle((int)x,(int)y,width,height);
+    }*/
+
+
+
+    @Override
     public double getX() {
         return x;
     }
@@ -34,5 +47,12 @@ public class Enemy extends GameObject implements Entity{
         return y;
     }
 
+    public void hit(){
+        this.life--;
+    }
+
+    public int getLife(){
+        return this.life;
+    }
 
 }

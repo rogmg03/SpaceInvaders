@@ -1,20 +1,22 @@
 package Game;
 
+import Tools.EntityA;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Player extends GameObject{
+public class Player extends GameObject implements EntityA{
 
     private double velX;
     private double velY;
-
+    private int life;
     private Textures tex;
 
 
     public Player(double x, double y, Textures tex){
         super(x,y);
         this.tex = tex;
-
+        this.life = 1;
     }
 
     public void tick(){
@@ -31,6 +33,11 @@ public class Player extends GameObject{
         g.drawImage(tex.type,(int)x,(int)y,null);
     }
 
+    @Override
+    public Rectangle getBounds() {
+        return null;
+    }
+
     //###########Getter y Setters#############
 
     public double getX(){
@@ -42,28 +49,12 @@ public class Player extends GameObject{
     public void setX(double x){
         this.x = x;
     }
-    public void setY(double y){
-        this.y = y;
-    }
 
     public void setVelX (double velX){
         this.velX = velX;
     }
 
-    public void setVelY(double velY) {
-        this.velY = velY;
+    public int getLife(){
+        return this.life;
     }
-
-    /*public void changeType(String side){
-        if (side == "LEFT"){
-            type = player1;
-        } else if (side == "RIGHT") {
-            type = player2;
-        } else if (side == "NORMAL"){
-            type = player;
-        }
-    }*/
-
-
-
 }
