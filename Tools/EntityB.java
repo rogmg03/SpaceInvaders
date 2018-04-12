@@ -1,5 +1,6 @@
 package Tools;
 
+import Game.Controller;
 import Game.GameObject;
 
 import java.awt.*;
@@ -12,4 +13,5 @@ public interface EntityB{
     public double getX();
     public double getY();
     public int getLife();
+    public Controller getC();
 }

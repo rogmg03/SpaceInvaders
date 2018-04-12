@@ -57,9 +57,9 @@ public class Game extends Canvas implements Runnable {
         tex = new Textures(this);
 
         p = new Player(300,450,tex);
-        c = new Controller(tex);
+        c = new Controller(tex,this);
 
-        c.createEnemy("Basic");
+        c.createEnemy("EnemyA");
 
         ea = c.getEntityA();
         eb = c.getEntityB();
@@ -124,8 +124,6 @@ public class Game extends Canvas implements Runnable {
     private void tick(){ //lo que el juego actualice
         p.tick();
         c.tick();
-
-
     }
 
     private void render(){ //lo que el juego renderice
@@ -203,6 +201,7 @@ public class Game extends Canvas implements Runnable {
         frame.setResizable(false); //Evita que cambie el tamaño de la ventana
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+
 
         game.start();
     }

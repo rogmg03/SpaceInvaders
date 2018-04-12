@@ -22,10 +22,11 @@ public class Bullet extends GameObject/*Nodo<Bullet>*/ implements EntityA {
 
     public void tick(){
         y-=10;
-
+    /*
         if (Physics.Collision(this, game.eb)){
             System.out.println("Shoot");
         }
+        */
     }
 
     public void render(Graphics g){
@@ -33,7 +34,7 @@ public class Bullet extends GameObject/*Nodo<Bullet>*/ implements EntityA {
         }
 
     public Rectangle getBounds() {
-        return super.getBounds(128,128);
+        return super.getBounds(32,32);
     }
 
     //###########Getter y Setters#############
@@ -45,7 +46,10 @@ public class Bullet extends GameObject/*Nodo<Bullet>*/ implements EntityA {
         }
     public double getY(){
             return y;
-        }
+    }
+    public void hit(){
+        this.life--;
+    }
     public void setX(double x){
             this.x = x;
         }

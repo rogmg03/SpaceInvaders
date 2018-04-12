@@ -12,4 +12,5 @@ public interface EntityA{
     public double getX();
     public double getY();
     public int getLife();
+    public void hit();
 }

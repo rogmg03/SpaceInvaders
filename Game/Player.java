@@ -57,4 +57,9 @@ public class Player extends GameObject implements EntityA{
     public int getLife(){
         return this.life;
     }
+
+    @Override
+    public void hit() {
+
+    }
 }

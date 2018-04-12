@@ -1,7 +1,8 @@
 package Enemies;
 
+import Game.Controller;
 import Game.Enemy;
-import Game.GameObject;
+import Game.Game;
 import Game.Textures;
 import Tools.EntityB;
 import Tools.ListaEnlazada;
@@ -15,12 +16,14 @@ public class Basic implements Wave {
     public ListaEnlazada<EntityB> e = new ListaEnlazada<EntityB>();
 
     Textures tex;
+    Game game;
     Random r = new Random();
 
-    public Basic (Textures tex){
-        this.tex=tex;
+    public Basic (Textures tex,Controller c, Game game){
+        this.tex = tex;
+        this.game = game;
         for (int i = 0; i < 7; i++){
-            addEntity(new Enemy(i*110, 10, tex, 1));
+            addEntity(new Enemy(i*110, 10, tex, 1, c,game));
         }
     }
 

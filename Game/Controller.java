@@ -15,24 +15,26 @@ public class Controller {
     private static ListaEnlazada <EntityB> eb = new ListaEnlazada<EntityB>();
     Random r = new Random();
 
-
+    Game game;
     EntityA enta;
     EntityB entb;
     Wave type;
-    Game game;
     Textures tex;
-    public Controller(Textures tex) {
+    public Controller(Textures tex, Game game) {
         this.tex = tex;
+        this.game = game;
     }
+
+
 
     public void createEnemy(String type){
         if (type.equals("Basic")){
-            Basic wave = new Basic(tex);
+            Basic wave = new Basic(tex,this,game);
             this.type = wave;
         } else if(type.equals("EnemyA")){
-            EnemyA wave = new EnemyA(tex);
+            EnemyA wave = new EnemyA(tex,this,game);
             this.type = wave;
-            wave.setBoss();
+            //wave.setBoss();
         }
         this.eb = this.type.getLista();
     }
@@ -49,8 +51,6 @@ public class Controller {
             entb = eb.get(i);
             entb.tick();
         }
-
-
         type.tick();
     }
 
@@ -64,9 +64,6 @@ public class Controller {
             entb = eb.get(i);
             entb.render(g);
         }
-
-
-
         type.render(g);
     }
 
@@ -76,11 +73,11 @@ public class Controller {
     public void addEntity(EntityB block){
         eb.add(block);
     }
-    private void removeEntity(EntityA block) {
+    public void removeEntity(EntityA block) {
         ea.removeValue(block, false);
     }
 
-    private void removeEntity(EntityB block){
+    public void removeEntity(EntityB block){
         eb.removeValue(block,false);
     }
 
