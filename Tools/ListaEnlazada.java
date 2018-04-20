@@ -1,7 +1,7 @@
 package Tools;
 
 public class ListaEnlazada <T>{
-    Nodo head;
+    Nodo<T> head;
     int Size;
 
 
@@ -61,29 +61,30 @@ public class ListaEnlazada <T>{
     public void removePos(int i) {
         Nodo temp = this.head;
         int cont = 0;
-
         while (cont != i){
             temp = temp.next;
             cont += 1;
-        }temp.next = temp.next.next;
+        }
         temp.next.prev = temp.prev;
+        temp.prev.next = temp.next;
+        this.Size--;
     }
 
     public T get(int i){
         int cont = 0;
-        Nodo temp = this.head;
+        Nodo<T> temp = this.head;
 
         while (cont!=i){
             temp = temp.next;
             cont += 1;
         }
         //System.out.println(temp.getT());
-        return (T) temp.getT();
+        return temp.getT();
     }
 
     public void change(int i, T valor){
         int cont = 0;
-        Nodo temp = this.head;
+        Nodo<T> temp = this.head;
 
         while (cont!=i){
             temp = temp.next;
@@ -91,8 +92,6 @@ public class ListaEnlazada <T>{
         }
         temp.value = valor;
     }
-
-
 
     public int getSize() {
         return Size;
@@ -103,6 +102,13 @@ public class ListaEnlazada <T>{
         while (temp != null){
             System.out.println(temp.getT());
             temp = temp.next;
+        }
+    }
+
+    public void kill(){
+        for (int i=0; i<this.getSize(); i++){
+            this.removePos(i);
+            this.Size = 0;
         }
     }
 }

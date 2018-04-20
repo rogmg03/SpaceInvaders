@@ -9,9 +9,9 @@ public class Main {
         lista.add(3);
         lista.add(4);
         lista.show();
-        lista.get(3);
-        System.out.println("Borra uno");
-        lista.removeValue(0,true);
+        lista.changePos(1,2);
+        //System.out.println("Borra uno");
+        //lista.removeValue("l",true);
         lista.show();
     }
 }

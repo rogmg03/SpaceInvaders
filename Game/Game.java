@@ -9,12 +9,27 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
+import java.io.InputStreamReader;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Random;
+
+import Server.Server;
 
 import javax.swing.JFrame;
 
 public class Game extends Canvas implements Runnable {
+
+    static Socket s;
+    static ServerSocket ss;
+    static InputStreamReader isr;
+    static BufferedReader br;
+    static String message;
+
+
+
 
     public static final int WIDTH = 400;
     public static final int HEIGHT = WIDTH / 12 * 9;
@@ -35,8 +50,12 @@ public class Game extends Canvas implements Runnable {
     //contador de enemigos vivos y muertos
 
     private Player p;
-    private Controller c;
+    private Controller c1;
+    private Controller c2;
     private Textures tex;
+
+    public static int lifeScale = 1;
+    private int tarda = 500;
 
     public ListaEnlazada<EntityA> ea;
     public ListaEnlazada<EntityB> eb;
@@ -54,15 +73,17 @@ public class Game extends Canvas implements Runnable {
 
         addKeyListener(new KeyInput(this));
 
+
         tex = new Textures(this);
 
         p = new Player(300,450,tex);
-        c = new Controller(tex,this);
+        c1 = new Controller(tex,this);
+        c2 = new Controller(tex,this);
 
-        c.createEnemy("EnemyA");
+        c1.createEnemy(1);
 
-        ea = c.getEntityA();
-        eb = c.getEntityB();
+        ea = c1.getEntityA();
+        eb = c1.getEntityB();
 
     }
 
@@ -73,6 +94,20 @@ public class Game extends Canvas implements Runnable {
         running = true;
         thread = new Thread(this);
         thread.start();
+    }
+
+    public void reload(){
+        Random rand = new Random();
+        int r = rand.nextInt(2) + 1;
+        c2.createEnemy(3);//Acá va r
+        c1 = c2;
+        c2 = new Controller(tex,this);
+        lifeScale++;
+        if(tarda==0){
+            tarda=0;
+        }else {
+            tarda -= 50;
+        }
     }
 
     private synchronized void stop(){
@@ -123,7 +158,8 @@ public class Game extends Canvas implements Runnable {
 
     private void tick(){ //lo que el juego actualice
         p.tick();
-        c.tick();
+        c1.tick();
+        serverPressed();
     }
 
     private void render(){ //lo que el juego renderice
@@ -145,18 +181,16 @@ public class Game extends Canvas implements Runnable {
         g.drawImage(background, 0, 0, null);
 
         p.render(g);
-        c.render(g);
+        c1.render(g);
 
         //########################################
         g.dispose();
         bs.show();
 
-
     }
 
     public void keyPressed(KeyEvent e) {
         int key = e.getExtendedKeyCode();
-
 
         if (key == KeyEvent.VK_RIGHT){
             p.setVelX(5);
@@ -164,9 +198,9 @@ public class Game extends Canvas implements Runnable {
         }else if (key == KeyEvent.VK_LEFT){
             p.setVelX(-5);
             Textures.changeType("LEFT");
-        }else if (key == KeyEvent.VK_SPACE && !shooting && delay.delay(500)){
+        }else if (key == KeyEvent.VK_SPACE && !shooting && delay.delay(tarda)){
             shooting = true;
-            c.addEntity(new Bullet(p.getX(),p.getY(),tex,this));
+            c1.addEntity(new Bullet(p.getX(),p.getY(),tex,this));
         }
     }
 
@@ -185,6 +219,13 @@ public class Game extends Canvas implements Runnable {
         }
     }
 
+    public void serverPressed(){
+        if (Server.shot()&& !shooting && delay.delay(500)){
+            shooting = true;
+            c1.addEntity(new Bullet(p.getX(),p.getY(),tex,this));
+            shooting = false;
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -204,6 +245,8 @@ public class Game extends Canvas implements Runnable {
 
 
         game.start();
+
+        Server.serverShoot();
     }
 
 

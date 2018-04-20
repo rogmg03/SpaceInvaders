@@ -6,10 +6,14 @@ import Game.Game;
 import Tools.EntityA;
 import Game.Textures;
 import Tools.EntityB;
+import Tools.ListaDoble;
 import Tools.ListaEnlazada;
 
 import java.awt.*;
 import java.util.Random;
+
+import static Game.Game.lifeScale;
+
 
 public class EnemyA implements Wave {
     Textures tex;
@@ -28,9 +32,8 @@ public class EnemyA implements Wave {
         this.setBoss();
     }
 
-
     public void setBoss(){
-        Boss b = new Boss((A.e.get(r).getX()),(A.e.get(r).getY()), tex, 50,c,game);
+        Boss b = new Boss((A.e.get(r).getX()),(A.e.get(r).getY()), tex, lifeScale*50,c,game);
         A.e.change(r,b);
     }
 
@@ -41,6 +44,7 @@ public class EnemyA implements Wave {
     @Override
     public void tick() {
         A.tick();
+
     }
 
     @Override
@@ -51,5 +55,6 @@ public class EnemyA implements Wave {
     @Override
     public void addEntity(EntityB block) {
     }
+
 
 }

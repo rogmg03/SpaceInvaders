@@ -3,6 +3,7 @@ package Game;
 import Tools.EntityA;
 import Tools.Nodo;
 import Tools.Physics;
+import Tools.Timer;
 
 import java.awt.*;
 
@@ -22,16 +23,22 @@ public class Bullet extends GameObject/*Nodo<Bullet>*/ implements EntityA {
 
     public void tick(){
         y-=10;
-    /*
+
         if (Physics.Collision(this, game.eb)){
-            System.out.println("Shoot");
+            System.out.println("SHOOT");
+            this.life--;
+            //removeBullet();
         }
-        */
+
+    }
+
+    public void removeBullet(){
+        super.y = -100;
     }
 
     public void render(Graphics g){
-            g.drawImage(tex.image,(int)x,(int)y,null);
-        }
+        g.drawImage(tex.image,(int)x,(int)y,null);
+    }
 
     public Rectangle getBounds() {
         return super.getBounds(32,32);

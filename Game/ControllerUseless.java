@@ -1,16 +1,17 @@
-package Game;
+/*package Game;
 
 import Enemies.*;
 import Tools.EntityA;
 import Tools.EntityB;
 import Tools.ListaEnlazada;
-import java.util.Random;
+
 import java.awt.*;
+import java.util.Random;
 
-public class Controller {
+public class ControllerUseless {
 
-    public static ListaEnlazada <EntityA> ea = new ListaEnlazada<EntityA>();
-    public static ListaEnlazada <EntityB> eb = new ListaEnlazada<EntityB>();
+    private static ListaEnlazada <EntityA> ea = new ListaEnlazada<EntityA>();
+    private static ListaEnlazada <EntityB> eb = new ListaEnlazada<EntityB>();
     Random r = new Random();
 
     Game game;
@@ -18,35 +19,46 @@ public class Controller {
     EntityB entb;
     Wave type;
     Textures tex;
+    public static boolean function;
+    int alpha;
 
 
-    public Controller(Textures tex, Game game) {
+    public ControllerUseless(Textures tex, Game game) {
         this.tex = tex;
         this.game = game;
+        alpha=1;
     }
 
-    public void createEnemy(int type){
-        if (type==1){
-            Basic waveb = new Basic(tex,this,game);
-            this.type = waveb;
-            update(this.type.getLista());
-        }else if(type==2){
-            EnemyA waveA = new EnemyA(tex, this, game);
-            this.type = waveA;
-            update(this.type.getLista());
-        }else if(type==3){
-            EnemyB waveB = new EnemyB(tex,this,game);
-            this.type = waveB;
-            update(this.type.getLista());
-        }else if(type==4){
-            EnemyC waveC = new EnemyC(tex,this,game);
-            this.type = waveC;
-            update(this.type.getLista());
+
+    public void enemyFactory (int level){
+        if (level==1){
+            this.createEnemy("Basic");
+        }else if (level==2){
+            this.createEnemy("EnemyA");
+        }else if (level==3){
+            this.createEnemy("EnemyB");
+        }else if (level==4){
+            this.createEnemy("EnemyA");
         }
+        function = false;
     }
 
-    public void update(ListaEnlazada<EntityB> lista){
-        eb = lista;
+
+    public void createEnemy(String type){
+        if (type.equals("Basic")){
+            Basic wave = new Basic(tex,this,game);
+            this.type = wave;
+        } else if(type.equals("EnemyA")){
+            EnemyA wave = new EnemyA(tex,this,game);
+            this.type = wave;
+        } else if(type.equals("EnemyB")){
+            EnemyB wave = new EnemyB(tex,this,game);
+            this.type = wave;
+        } else if(type.equals("EnemyC")){
+            EnemyC wave = new EnemyC(tex,this,game);
+            this.type = wave;
+        }
+        this.eb = this.type.getLista();
     }
 
     public void tick(){
@@ -61,7 +73,7 @@ public class Controller {
             entb = eb.get(i);
             entb.tick();
         }
-        this.type.tick();
+        type.tick();
     }
 
     public void render(Graphics g) {
@@ -74,17 +86,16 @@ public class Controller {
             entb = eb.get(i);
             entb.render(g);
         }
-        this.type.render(g);
+
+        type.render(g);
     }
 
     public void addEntity (EntityA block ){
         ea.add(block);
     }
-
     public void addEntity(EntityB block){
         eb.add(block);
     }
-
     public void removeEntity(EntityA block) {
         ea.removeValue(block, false);
     }
@@ -101,3 +112,4 @@ public class Controller {
         return eb;
     }
 }
+*/

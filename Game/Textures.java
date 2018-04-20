@@ -10,9 +10,11 @@ public class Textures {
     public static BufferedImage player1;
     public BufferedImage image;
     public static BufferedImage type;
-    public BufferedImage enemy;
-    public BufferedImage boss;
-    public int style;
+    public static BufferedImage enemy;
+    public static BufferedImage enemy2;
+    public static BufferedImage enemy3;
+    public static BufferedImage boss;
+    public static BufferedImage style;
 
     private SpriteSheet ss;
 
@@ -29,6 +31,8 @@ public class Textures {
         enemy = ss.grabImage(5,1,128,128);
         boss = ss.grabImage(1,2,128,128);
         type = player;
+        enemy2 = ss.grabImage(6,1,128,128);
+        enemy3 = ss.grabImage(7,1,128,128);
     }
     static void changeType(String side){
         if (side == "LEFT"){
@@ -38,6 +42,9 @@ public class Textures {
         } else if (side == "NORMAL"){
             type = player;
         }
+    }
+    static void changeStyle(BufferedImage type){
+        style = type;
     }
 
 }
