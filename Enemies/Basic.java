@@ -5,6 +5,7 @@ import Game.Enemy;
 import Game.Game;
 import Game.Textures;
 import Tools.EntityB;
+import Tools.ListaCircular;
 import Tools.ListaEnlazada;
 
 import java.awt.*;
@@ -45,7 +46,7 @@ public class Basic implements Wave {
             ent = e.get(i);
             ent.tick();
         }
-        System.out.println(e.getSize());
+        //System.out.println(e.getSize());
     }
 
 
@@ -64,6 +65,11 @@ public class Basic implements Wave {
 
     public ListaEnlazada<EntityB> getLista(){
         return this.e;
+    }
+
+    @Override
+    public ListaCircular<EntityB> getListaC() {
+        return null;
     }
 
 

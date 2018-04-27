@@ -4,10 +4,7 @@ import Game.Controller;
 import Game.Game;
 import Game.Boss;
 import Game.Textures;
-import Tools.EntityB;
-import Tools.ListaDoble;
-import Tools.ListaEnlazada;
-import Tools.Timer;
+import Tools.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -61,10 +58,16 @@ public class EnemyB implements Wave {
             this.n.get(pos).changeX(a);
             this.n.get(temp).changeX(b);
 
+            Rectangle r1= this.n.get(temp).getBounds();
+            Rectangle r2= this.n.get(pos).getBounds();
+
+            this.n.get(pos).changeBounds(r1);
+            this.n.get(temp).changeBounds(r2);
+
+            //this.n.changePos(pos,temp);
+
 
             this.pos = temp;
-        }else{
-            return;
         }
     }
 
@@ -77,13 +80,16 @@ public class EnemyB implements Wave {
     EntityB ent;
     public void tick() {
         for (int i = 0; i < n.getSize(); i++){
-            if (delay.delay(200)){
+            if (delay.delay(2000)){
                 this.changeBoss();
+                ent = n.get(i);
+                ent.tick();
                 //System.out.println("done");
-            }
+            }else {
 
-            ent = n.get(i);
-            ent.tick();
+                ent = n.get(i);
+                ent.tick();
+            }
         }
         //ent.tick();
     }
@@ -104,5 +110,10 @@ public class EnemyB implements Wave {
     @Override
     public ListaDoble<EntityB> getLista() {
         return n;
+    }
+
+    @Override
+    public ListaCircular<EntityB> getListaC() {
+        return null;
     }
 }

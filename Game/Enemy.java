@@ -17,6 +17,7 @@ public class Enemy extends GameObject implements EntityB {
     private Game game;
     private Controller c;
     private Random rand;
+    private Rectangle bound;
     private int tipo;
 
     //private boolean isBoss;
@@ -58,7 +59,12 @@ public class Enemy extends GameObject implements EntityB {
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle((int)this.getX(),(int)this.getY(),64,64);
+        this.bound = new Rectangle((int)this.getX(),(int)this.getY(),64,64);
+        return bound;
+    }
+
+    public void changeBounds(Rectangle boundy){
+        this.bound = boundy;
     }
 
     @Override

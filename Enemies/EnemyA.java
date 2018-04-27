@@ -3,11 +3,8 @@ package Enemies;
 import Game.Boss;
 import Game.Controller;
 import Game.Game;
-import Tools.EntityA;
+import Tools.*;
 import Game.Textures;
-import Tools.EntityB;
-import Tools.ListaDoble;
-import Tools.ListaEnlazada;
 
 import java.awt.*;
 import java.util.Random;
@@ -22,6 +19,7 @@ public class EnemyA implements Wave {
     Basic A;
     Random rand = new Random();
     int r = rand.nextInt(6);
+    ListaEnlazada<EntityB> w;
 
 
     public EnemyA (Textures tex, Controller c, Game game){
@@ -30,6 +28,7 @@ public class EnemyA implements Wave {
         this.c = c;
         A = new Basic(tex,c,game);
         this.setBoss();
+        //w = A.e;
     }
 
     public void setBoss(){
@@ -42,9 +41,13 @@ public class EnemyA implements Wave {
     }
 
     @Override
+    public ListaCircular<EntityB> getListaC() {
+        return null;
+    }
+
+    @Override
     public void tick() {
         A.tick();
-
     }
 
     @Override

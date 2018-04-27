@@ -1,10 +1,11 @@
 package Tools;
 
-public class ListaEnlazada <T>{
+public class ListaEnlazada<T> implements  Lista<T>{
     Nodo<T> head;
     int Size;
 
 
+    @Override
     public void add(T valor){
         if (this.head == null){
             this.head = new Nodo(valor);
@@ -21,6 +22,8 @@ public class ListaEnlazada <T>{
     }
 
     //Boolean: true=borra todos, false=borra el primero
+
+
     public void removeValue(T valor, Boolean todos){
         Nodo temp = this.head;
         if (todos){
@@ -58,6 +61,7 @@ public class ListaEnlazada <T>{
     }
 
 
+    @Override
     public void removePos(int i) {
         Nodo temp = this.head;
         int cont = 0;
@@ -70,6 +74,8 @@ public class ListaEnlazada <T>{
         this.Size--;
     }
 
+
+    @Override
     public T get(int i){
         int cont = 0;
         Nodo<T> temp = this.head;
@@ -93,6 +99,8 @@ public class ListaEnlazada <T>{
         temp.value = valor;
     }
 
+
+    @Override
     public int getSize() {
         return Size;
     }

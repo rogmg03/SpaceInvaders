@@ -1,9 +1,6 @@
 package Game;
 
-import Tools.EntityA;
-import Tools.EntityB;
-import Tools.ListaEnlazada;
-import Tools.Timer;
+import Tools.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -58,7 +55,7 @@ public class Game extends Canvas implements Runnable {
     private int tarda = 500;
 
     public ListaEnlazada<EntityA> ea;
-    public ListaEnlazada<EntityB> eb;
+    public Lista<EntityB> eb;
 
     public void init(){
         requestFocus(); //Evita tener que darle click a la ventana
@@ -98,15 +95,15 @@ public class Game extends Canvas implements Runnable {
 
     public void reload(){
         Random rand = new Random();
-        int r = rand.nextInt(2) + 1;
-        c2.createEnemy(3);//Acá va r
+        int r = rand.nextInt(3) + 1;
+        c2.createEnemy(r);//Acá va r
         c1 = c2;
         c2 = new Controller(tex,this);
         lifeScale++;
         if(tarda==0){
             tarda=0;
         }else {
-            tarda -= 50;
+            tarda -= 80;
         }
     }
 

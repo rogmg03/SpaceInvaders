@@ -12,6 +12,7 @@ public class Bullet extends GameObject/*Nodo<Bullet>*/ implements EntityA {
     private int life;
     private Textures tex;
     private Game game;
+    private Timer delay;
 
     public Bullet(double x, double y, Textures tex, Game game){
         super(x,y);
@@ -24,12 +25,11 @@ public class Bullet extends GameObject/*Nodo<Bullet>*/ implements EntityA {
     public void tick(){
         y-=10;
 
-        if (Physics.Collision(this, game.eb)){
+        if (Physics.Collision(this, game.eb)) {
             System.out.println("SHOOT");
             this.life--;
-            //removeBullet();
         }
-
+        //    removeBullet();
     }
 
     public void removeBullet(){

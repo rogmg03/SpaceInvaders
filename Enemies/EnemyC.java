@@ -1,69 +1,103 @@
 package Enemies;
 
-import Game.Boss;
+import Game.BossC;
 import Game.Controller;
 import Game.Game;
 import Game.Textures;
-import Tools.EntityB;
-import Tools.ListaDoble;
-import Tools.ListaEnlazada;
+import Tools.*;
 
 import java.awt.*;
 import java.util.Random;
 
-public class EnemyC extends EnemyA implements Wave {
+import static Game.Game.lifeScale;
+
+public class EnemyC /*extends EnemyA*/ implements Wave {
     Textures tex;
     Game game;
     Controller c;
     Basic A;
-    Random rand = new Random();
-    public ListaDoble<EntityB> n = new ListaDoble<EntityB>();
-    int r;
-    public EnemyC(Textures tex, Controller c, Game game){
-        super(tex,c,game);
-        this.A = super.A;
-        this.changeList(A.e,n);
+    Random rand;
+    ListaCircular<EntityB> w = new ListaCircular<EntityB>();
+    //int a = rand.nextInt(5);
+    //int r = 3;
+
+    int r = 3;
+
+
+    public EnemyC (Textures tex, Controller c, Game game){
+        //super(tex,c,game);
+        this.tex = tex;
+        this.c = c;
+        this.game = game;
+        A = new Basic(tex,c,game);
+        this.changeList(A.e,w);
+        this.setBoss();
+        //this.r = super.r;
+
     }
 
-
-
-    EntityB ent;
-    @Override
-    public void tick() {
-        for (int i = 0; i < n.getSize(); i++){
-            if (n.get(i).getLife()==0) {
-                n.removePos(i);
-                if (i == r) {
-                    r = rand.nextInt(n.getSize() - 1);
-                    this.setBoss(r);
-                }
-            }
-            ent = n.get(i);
-            ent.tick();
+    public void changeList(ListaEnlazada<EntityB> e, ListaCircular<EntityB> n){
+        for (int i = 0; i <7 ;i++){
+            System.out.println(i);
+            EntityB temp = e.get(i);
+            n.add(temp);
         }
     }
 
-    public void setBoss(int pos){
-        Boss b = new Boss((n.get(pos).getX()),(n.get(pos).getY()), tex, 50,c,game);
-        n.change(pos,b);
+    EntityB enta;
+    @Override
+    public void tick()/* throws Exception */{
+        for (int i = 0; i < w.getSize(); i++) {
+            if (w.get(i).getLife() <= 0) {
+                if (w.getSize() == 1) {
+                    System.out.println("DONE1");
+                    game.reload();
+                } else if (w.getSize() > 1) {
+                    if (w.get(i).getBoss()) {
+                        System.out.println("DONE2");
+                        r = rand.nextInt(w.getSize()-1);
+                        //game.reload();
+                        this.setBoss();
+                    }
+                }
+            }
+            enta = w.get(i);
+            enta.tick();
+        }
+    }
+
+    public void setBoss(){
+        if(w.getSize()<1){
+            game.reload();
+        }else {
+            r = (r + 3) % w.getSize();
+            BossC b = new BossC((w.get(r).getX()), (w.get(r).getY()), tex, lifeScale * 50, c, game, this);
+            w.change(r, b);
+        }
     }
 
     @Override
     public void render(Graphics g) {
-        A.render(g);
+        for (int i = 0; i < w.getSize(); i++) {
+            enta = w.get(i);
+            enta.render(g);
+        }
     }
+
 
     @Override
     public void addEntity(EntityB block) {
     }
 
-    public void changeList(ListaEnlazada<EntityB> e, ListaDoble<EntityB> n){
-        for (int i = 0; i < (e.getSize());i++){
-            n.add(e.get(i));
-        }
+    @Override
+    public ListaEnlazada<EntityB> getLista() {
+        return null;
     }
-    public ListaEnlazada<EntityB> getLista(){
-        return this.n;
+
+    @Override
+    public ListaCircular<EntityB> getListaC() {
+        return w;
     }
+
 
 }

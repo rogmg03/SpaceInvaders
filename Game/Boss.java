@@ -10,9 +10,10 @@ public class Boss extends GameObject implements EntityB {
 
     private Textures tex;
     private int life;
-    private Game game;
-    private Controller c;
+    public Game game;
+    public Controller c;
     public boolean isBoss;
+    private Rectangle bound;
 
     public Boss(double x, double y, Textures tex, int life, Controller c, Game game) {
         super(x, y);
@@ -21,7 +22,6 @@ public class Boss extends GameObject implements EntityB {
         this.c = c;
         this.game = game;
         this.isBoss = true;
-
     }
 
     public void tick(){
@@ -41,7 +41,12 @@ public class Boss extends GameObject implements EntityB {
 
     @Override
     public Rectangle getBounds() {
-        return new Rectangle((int)this.getX(),(int)this.getY(),64,64);
+        this.bound = new Rectangle((int)this.getX(),(int)this.getY(),64,64);
+        return bound;
+    }
+
+    public void changeBounds(Rectangle boundy){
+        this.bound = boundy;
     }
 
     @Override

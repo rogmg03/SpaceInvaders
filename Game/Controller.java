@@ -1,16 +1,16 @@
 package Game;
 
 import Enemies.*;
-import Tools.EntityA;
-import Tools.EntityB;
-import Tools.ListaEnlazada;
+import Tools.*;
+
 import java.util.Random;
 import java.awt.*;
 
 public class Controller {
 
     public static ListaEnlazada <EntityA> ea = new ListaEnlazada<EntityA>();
-    public static ListaEnlazada <EntityB> eb = new ListaEnlazada<EntityB>();
+    public static Lista<EntityB> eb = new ListaEnlazada<EntityB>();
+
     Random r = new Random();
 
     Game game;
@@ -34,18 +34,22 @@ public class Controller {
             EnemyA waveA = new EnemyA(tex, this, game);
             this.type = waveA;
             update(this.type.getLista());
-        }else if(type==3){
+        }else if(type==4){
             EnemyB waveB = new EnemyB(tex,this,game);
             this.type = waveB;
             update(this.type.getLista());
-        }else if(type==4){
+        }else if(type==3){
             EnemyC waveC = new EnemyC(tex,this,game);
             this.type = waveC;
-            update(this.type.getLista());
+            update(this.type.getListaC());
         }
     }
 
     public void update(ListaEnlazada<EntityB> lista){
+        eb = lista;
+    }
+
+    public void update(ListaCircular<EntityB> lista){
         eb = lista;
     }
 
@@ -97,7 +101,7 @@ public class Controller {
         return ea;
     }
 
-    public ListaEnlazada<EntityB> getEntityB() {
+    public Lista<EntityB> getEntityB() {
         return eb;
     }
 }

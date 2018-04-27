@@ -12,7 +12,7 @@ public interface EntityB{
     public void render(Graphics g);
     public void changeTex(BufferedImage style);
     public Rectangle getBounds();
-    public void changeBounds();
+    public void changeBounds(Rectangle boundy);
 
     public double getX();
     public double getY();

@@ -4,7 +4,7 @@ import Game.Textures;
 
 import java.awt.image.BufferedImage;
 
-public class ListaDoble<T> extends ListaEnlazada<T>{
+public class ListaDoble<T> extends ListaEnlazada<T> implements Lista<T>{
     public Nodo<T> tail;
     private int i;
 
